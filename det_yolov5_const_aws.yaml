@@ -1,0 +1,36 @@
+name: det-yolov5
+entrypoint: python3 determined_yolov5_debug.py
+
+hyperparameters:
+  data_yaml: /usr/src/app/data/coco.yaml
+  imgsz: 640
+  weights: yolov5n.pt
+  batch-size: 16
+  noautoanchor: True
+  project: coco128_train/
+  name: driver_test
+  save_json: True
+  epochs: 1
+  hyp: /usr/src/app/data/hyps/hyp.scratch-low.yaml
+  workers: 0
+
+# Use the single-searcher to run just one instance of the training script
+searcher:
+   name: single
+   # metric is required but it shouldn't hurt to ignore it at this point.
+   metric: x
+   # max_length is ignored if the training script ignores it.
+   max_length: 1
+resources:
+  slots_per_trial: 1
+  # shm_size: 8589934592
+environment:
+  image: ultralytics/yolov5:v6.0
+
+max_restarts: 0
+# bind_mounts:
+#   - host_path: /home/ubuntu/yolov5-determined
+#     container_path: /usr/src/app
+#     read_only: true
+#   - host_path: /home/ubuntu/data/coco
+#     container_path: /mnt/

@@ -1,6 +1,6 @@
 ROOT_DIR=/run/determined/workdir/yolov5
 JOB_DIR=/run/determined/workdir/jobs
-EXP_NAME=test-train
+EXP_NAME=test-train-200-epochs
 PROJ_DIR=/run/determined/workdir/exps
 DATA_YAML=/run/determined/workdir/virat-aerial-156-frames-v2-coco-yolov5/data.yml
 MODEL_CFG=${ROOT_DIR}/models/yolov5x.yaml
@@ -8,7 +8,7 @@ BATCH_SIZE=8
 TRAIN_IMSIZE=640
 HYP_YAML=${ROOT_DIR}/data/hyps/hyp.scratch-low.yaml
 INIT_WEIGHTS=yolov5x6.pt
-EPOCHS=100
+EPOCHS=200
 if [ ! -f "${JOB_DIR}" ]; then
     echo "${JOB_DIR} does not exist."
     mkdir ${JOB_DIR}

@@ -1,0 +1,37 @@
+name: det-yolov5-grid-full
+entrypoint: python3 determined_yolov5_search.py
+
+hyperparameters:
+  data_yaml: '/mnt/coco128/coco128-det.yaml'
+  # imgsz: 
+  imgsz: 96
+  batch-size: 16
+  # weights: 'yolov5m.pt'
+  weights: 
+    type: categorical
+    vals: ['yolov5n.pt','yolov5s.pt', 'yolov5m.pt','yolov5l.pt','yolov5x.pt']
+    # vals: ['yolov5n.pt']
+
+  noautoanchor: True
+  project: 'coco128_train/'
+  name: 'driver_test'
+  save_json: True
+  epochs: 3
+  hyp: '/usr/src/app/data/hyps/hyp.scratch-low.yaml'
+  workers: 0
+
+# Use the single-searcher to run just one instance of the training script
+searcher:
+   name: grid
+   # metric is required but it shouldn't hurt to ignore it at this point.
+   metric: metrics/mAP_0.5:0.95
+   # max_length is ignored if the training script ignores it.
+   max_length: 1
+  #  max_trials: 4
+environment:
+  image: "yolov5-de"
+bind_mounts:
+  - host_path: /Users/mendeza/Documents/projects/yolov5
+    container_path: /usr/src/app
+  - host_path: /Users/mendeza/data/
+    container_path: /mnt/
